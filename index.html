@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Messmonitor Drehstrom · MechatronikerDev</title>
+<meta name="description" content="Drehstrom live auswerten: Spannung, Strom, Leistung, cos φ, Frequenz und Drehfeld je Phase, mit Zeigerdiagramm, Verlauf und Bewertung nach EN 50160. Messgerät per HTTP oder Modbus-Gateway anbinden oder Werte simulieren.">
+<meta name="theme-color" content="#16191d">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+<header class="kopf">
+  <div class="rahmen kopf-innen">
+    <div>
+      <p class="kennung">U · I · P · cos φ · f · Drehfeld</p>
+      <h1>Messmonitor Drehstrom</h1>
+      <p class="unter">Messgerät anbinden oder Werte simulieren. Die Auswertung rechnet live mit Zeigern wie ein Netzanalysator.</p>
+    </div>
+    <div class="quelle-status" id="quelleStatus"></div>
+  </div>
+</header>
+
+<main class="rahmen raster">
+  <div class="links">
+    <!-- Messgerät -->
+    <section class="karte" id="geraetKarte">
+      <button class="karte-kopf aufklapp" type="button" id="geraetKopf" aria-expanded="false">
+        <h2>Messgerät</h2><span class="meta" id="geraetKurz">Simulation</span>
+      </button>
+      <div class="karte-inhalt" id="geraetInhalt" hidden></div>
+    </section>
+
+    <!-- Messwerte -->
+    <section class="karte abschnitt">
+      <div class="karte-kopf"><h2>Messwerte</h2><span class="meta mono" id="zeitstempel"></span></div>
+      <div class="karte-inhalt">
+        <div class="kopfwerte" id="kopfwerte"></div>
+        <div class="tabelle-huelle"><table class="tabelle messtabelle" id="messtabelle"></table></div>
+      </div>
+    </section>
+
+    <div class="zwei-spalten abschnitt">
+      <section class="karte">
+        <div class="karte-kopf"><h2>Zeigerdiagramm</h2><span class="meta">U durchgezogen, I gestrichelt</span></div>
+        <div class="karte-inhalt zeiger-huelle"><svg id="zeiger" viewBox="-130 -130 260 260" role="img" aria-label="Zeigerdiagramm"></svg></div>
+      </section>
+      <section class="karte">
+        <div class="karte-kopf"><h2>Bewertung</h2><span class="meta" id="bewertungZahl"></span></div>
+        <div class="karte-inhalt"><ul class="bewertung" id="bewertung"></ul></div>
+      </section>
+    </div>
+
+    <section class="karte abschnitt">
+      <div class="karte-kopf"><h2>Verlauf</h2>
+        <div class="wahl klein" id="verlaufWahl">
+          <label><input type="radio" name="verlauf" value="i" checked>Strom</label><label><input type="radio" name="verlauf" value="u">Spannung</label><label><input type="radio" name="verlauf" value="p">Leistung</label>
+        </div>
+      </div>
+      <div class="karte-inhalt"><svg id="verlauf" viewBox="0 0 600 180" preserveAspectRatio="none" role="img" aria-label="Verlauf"></svg>
+        <div class="zeile verlauf-fuss"><span class="meta" id="verlaufInfo"></span><span class="platz"></span>
+          <button class="btn btn-linie klein" type="button" id="aufzeichnen">Aufzeichnung starten</button>
+          <button class="btn btn-linie klein" type="button" id="exportieren" disabled>Als CSV speichern</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Simulator -->
+  <aside class="rechts karte" id="simulator">
+    <div class="karte-kopf"><h2>Simulation</h2><span class="meta" id="simStatus">aktiv</span></div>
+    <div class="karte-inhalt" id="simInhalt"></div>
+  </aside>
+</main>
+
+<footer class="rahmen fuss">
+  <p>Grenzwerte nach DIN EN 50160 (Merkmale der Spannung in öffentlichen Netzen) und gängiger Praxis in der Instandhaltung. Die Simulation dient zum Verstehen und Üben. Arbeiten an elektrischen Anlagen nur durch Elektrofachkräfte, Messgeräte nur nach Herstellerangabe anschließen.</p>
+</footer>
+<div id="toast" class="toast" role="status"></div>
+<script src="app.js?v=3"></script>
+</body>
+</html>
